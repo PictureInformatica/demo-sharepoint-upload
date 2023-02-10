@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'br.com.picture.demo-sharepoint-upload'
+version '0.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.slf4j:slf4j-simple:2.0.6'
+    implementation 'com.typesafe:config:1.4.2'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'com.microsoft.graph:microsoft-graph:5.46.0'
+    implementation 'com.azure:azure-identity:1.8.0'
+}
+
+sourceCompatibility = JavaVersion.VERSION_17
+
+application {
+    mainClass = 'br.com.picture.demosharepoint.Application'
+    executableDir = ''
+}
+
+jar {
+    //noinspection GroovyAssignabilityCheck
+    manifest.attributes(
+            'Main-Class': application.mainClass,
+            'Implementation-Title': application.applicationName,
+            'Implementation-Vendor': 'Picture Soluções em TI',
+            'Implementation-Version': project.version,
+            'Class-Path': project.configurations.runtimeClasspath.collect { it.getName() }.join(' ')
+    )
+}
+
+tasks.installDist.duplicatesStrategy = DuplicatesStrategy.EXCLUDE
